@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import filedialog
 from tkinter import font
+import fileinput
 
 root = Tk()
 root.title('AVL Test')
@@ -26,7 +27,44 @@ def open_txt():
 	my_text.insert(END, content)
 	avl_file.close()
 
-	root.title(f'{name}')
+	root.title('{name}')
+
+#GUI to change X coordinate of an AVL file
+def change_X():
+	avl_file = avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
+	x = x_coord.get()
+	for line in fileinput.FileInput(avl_file,inplace=1):
+		if 'Xref' in line:
+			line = line.split()
+			line[0] = x
+			new_string = ' '.join(line)
+			print(new_string)
+		else:
+			print (line)
+	
+def change_Y():
+	avl_file = avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
+	y = y_coord.get()
+	for line in fileinput.FileInput(avl_file,inplace=1):
+		if 'Xref' in line:
+			line = line.split()
+			line[1] = y
+			new_string = ' '.join(line)
+			print(new_string)
+		else:
+			print (line)
+
+def change_Z():
+	avl_file = avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
+	z = z_coord.get()
+	for line in fileinput.FileInput(avl_file,inplace=1):
+		if 'Xref' in line:
+			line = line.split()
+			line[2] = z
+			new_string = ' '.join(line)
+			print(new_string)
+		else:
+			print (line)
 
 
 def save_txt():
@@ -61,6 +99,20 @@ open_button.pack(pady=10)
 save_button = Button(root, text="Save File Changes", command=save_txt)
 save_button.pack(pady=10)
 
+x_coord = Entry(root, width=5)
+x_coord.pack()
+coordinates_button = Button(root, text="Change X coordinate", command=change_X)
+coordinates_button.pack(pady=5)
+
+y_coord = Entry(root, width=5)
+y_coord.pack()
+coordinates_button = Button(root, text="Change Y coordinate", command=change_Y)
+coordinates_button.pack(pady=5)
+
+z_coord = Entry(root, width=5)
+z_coord.pack()
+coordinates_button = Button(root, text="Change Z coordinate", command=change_Z)
+coordinates_button.pack(pady=5)
 
 select_button = Button(root, text="Select Text", command=select)
 select_button.pack(pady=10)
