@@ -1,0 +1,39 @@
+ ---------------------------------------------
+ Run case 1 :  zero_aoa
+
+ pb/2V        -> pb/2V        = 0.0
+ alpha        -> alpha        = 0
+ beta         -> beta         = 0.0
+ rb/2V        -> rb/2V        = 0.0
+ qc/2V        -> qc/2V        = 0.0
+
+ X_cg       = 1.30716933405 m
+ Ixx        = 1.0        kg-m^2
+ Z_cg       = 0.172127537092 m
+ Izx        = 0.0        kg-m^2
+ Izz        = 1.0        kg-m^2
+ visc CM_u  = 0.0        
+ density    = 1.225      kg/m^3
+ CDo        = 0.0        
+ visc CL_u  = 0.0        
+ grav.acc.  = 9.81       m/s^2
+ visc CM_a  = 0.0        
+ pb/2V      = 0.0        
+ visc CL_a  = 0.0        
+ Mach       = 0.4        
+ Y_cg       = 2.46153846154 m
+ elevation  = 0.0        deg
+ CL         = 0.0        
+ turn_rad.  = 0.0        m
+ beta       = 0.0        deg
+ alpha      = 0.0        deg
+ Iyy        = 1.0        kg-m^2
+ bank       = 0.0        deg
+ Iyz        = 0.0        kg-m^2
+ qc/2V      = 0.0        
+ rb/2V      = 0.0        
+ Ixy        = 0.0        kg-m^2
+ mass       = 1.0        kg
+ velocity   = 0.0        m/s
+ heading    = 0.0        deg
+ load_fac.  = 0.0        
