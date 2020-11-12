@@ -46,17 +46,45 @@ def open_txt():
 	name = avl_file
 	# name = name.replace("C:/gui/", "")
 	# name = name.replace(".avl", "")
+	a=[]
 	print("opened: "+avl_file)
-	avl_file = open(avl_file, 'r')
-	content = avl_file.read()
-	for line in content:
-            for part in line.split():
-             if "#Xref" in part:
-                print (part+" and "+part+1)
+	with open(avl_file) as f:
+		for line in f:
+			if 'SURFACE' in line:
+				for i in range(2):
+						scale=next(f)
+						a.append(scale.rstrip('\n'))
+						filtered = [x for x in a if x.strip()]
+				print(filtered)
+		
+	variable = StringVar(root)
+	variable.set("Select Surface") 
+	w = OptionMenu(root, variable, *filtered)
+	w.configure(background="#708090")
+	w.place(x=560,y=150)	
+	# avl_file = open(avl_file, 'r')
+	# content = avl_file.read()
+	# for line in content:
+    #         for part in line.split():
+    #          if "#Xref" in part:
+    #             print (part+" and "+part+1)
 	#tkMessageBox.showinfo("Message", content)   
-	avl_file.close()
+	# avl_file.close()
 
 	root.title('{name}')
+
+# def get_Surface():
+# 	avl_file = avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
+
+# 	a=[]
+# 	with open(avl_file) as f:
+# 		for line in f:
+# 			if 'SURFACE' in line:
+# 				for i in range(2):
+# 						scale=next(f)
+# 						a.append(scale.rstrip('\n'))
+# 						filtered = [x for x in a if x.strip()]
+			
 
 #GUI to change X coordinate of an AVL file
 def change_X():
@@ -97,6 +125,28 @@ def change_Z():
 		else:
 			print (line)
 
+def change_scale():
+
+	avl_file = avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
+	new_scale=scale.get()
+
+	with open(avl_file) as f:
+		for line in f:
+			if 'SCALE' in line:
+				for i in range(2):
+					scale=next(f)
+					#print(next(f).rstrip('\n'))
+                	print(scale.rstrip('\n'))
+  
+
+def change_translate():
+	avl_file = avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
+	trans=translate.get()
+	with open(avl_file) as f:
+		for line in f:
+			if 'TRANSLATE' in line:
+				for i in range(2):
+						print(next(f).strip())
 
 def save_txt():
 	avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
@@ -133,24 +183,10 @@ open_button = Button(root, text="Select AVL File", command=open_txt,highlightbac
 open_button.pack()
 open_button.place(x=575,y=100)
 
-variable = StringVar(root)
-variable.set("Select Surface") # default value
+# default value
 
-# avl_file = avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
-# a=[]
-# with open(avl_file) as f:
-# 	for line in f:
-# 		for part in line.split():
-# 			if 'SURFACE' in part:
-# 				part = part.next()
-# 				a.append(line)
-# 				print("found")
-# 			else:
-# 				print ("none")
 
-w = OptionMenu(root, variable, *OPTIONS)
-w.configure(background="#708090")
-w.place(x=560,y=150)
+
 
 save_button = Button(root, text="Save AVL File", command=save_txt,highlightbackground="#708090")
 save_button.pack()
