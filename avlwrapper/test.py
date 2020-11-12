@@ -10,6 +10,7 @@ import subprocess
 from PIL import ImageTk,Image  
 import ttk
 import tkMessageBox
+import os
 
 
 root = Tkinter.Tk()
@@ -110,7 +111,10 @@ def select():
 	selected = my_text.selection_get()
 
 	my_label.config(text=selected)
-subprocess.Popen([r"/Users/carlycuadra/Documents/SeniorProject/avlwrapper/avl3.35"])
+
+pwd = os.getcwd()
+avl335 = pwd + "/avl3.35"
+subprocess.Popen([avl335])
 
 # my_frame = Frame(root)
 # my_frame.pack(pady=10)
