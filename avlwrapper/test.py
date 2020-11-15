@@ -51,12 +51,19 @@ def open_txt():
 	print("opened: "+avl_file)
 	with open(avl_file) as f:
 		for line in f:
+			n=next(f)
 			if 'SURFACE' in line:
-				for i in range(2):
-						scale=next(f)
-						a.append(scale.rstrip('\n'))
+
+				# for i in range(2):
+					if n != "\n":
+						a.append(n.rstrip('\n'))
 						filtered = [x for x in a if x.strip()]
-				print(filtered)
+					if n == "\n":
+						for i in range(2):
+							surf=next(f)
+							a.append(surf.rstrip('\n'))
+							filtered = [x for x in a if x.strip()]
+	print(filtered)
 		
 	variable = StringVar(root)
 	variable.set("Select Surface") 
@@ -128,26 +135,61 @@ def change_Z():
 
 def change_scale():
 
-	avl_file = avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
-	new_scale=scale.get()
+	avl_file = filedialog.askopenfilename(initialdir="C:/gui/", title="Open Text File", filetypes=(("AVL Files", "*.avl"), ))
+	# name = avl_file
 
-	with open(avl_file) as f:
-		for line in f:
-			if 'SCALE' in line:
-				for i in range(2):
-					scale=next(f)
-					#print(next(f).rstrip('\n'))
-                	print(scale.rstrip('\n'))
+	new_scale=scale.get()
+	print("opened: "+avl_file)
+	f = open(avl_file, 'r')
+	g = open('avl_file', 'w')
+	l=f.readlines()
+	# f.close()
+	
+
+	# with fdopen(fh,'w') as new_file:
+	# for line in fileinput.FileInput(avl_file,inplace=1):
+	for ind in range(len(l)):
+		if 'SCALE' in l[ind]:
+			print(l[ind+1])
+			l[ind+1]=new_scale
+			
+			g.write(l[ind])
+		else:
+			g.write(l[ind])
+	# for field in l:
+	# 	g.write(field)
+	os.remove(avl_file)
+	os.rename('avl_file', 'runs/b737.avl')
+	g.close()
+	f.close()
   
 
 def change_translate():
-	avl_file = avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
-	trans=translate.get()
-	with open(avl_file) as f:
-		for line in f:
-			if 'TRANSLATE' in line:
-				for i in range(2):
-						print(next(f).strip())
+	avl_file = filedialog.askopenfilename(initialdir="C:/gui/", title="Open Text File", filetypes=(("AVL Files", "*.avl"), ))
+	trans=translate_But.get()
+	print("opened: "+avl_file)
+	f = open(avl_file, 'r')
+	g = open('avl_file', 'w')
+	l=f.readlines()
+	# f.close()
+	
+
+	# with fdopen(fh,'w') as new_file:
+	# for line in fileinput.FileInput(avl_file,inplace=1):
+	for ind in range(len(l)):
+		if 'TRANSLATE' in l[ind]:
+			print(trans)
+			l[ind+1]=trans
+			print(l[ind+1])
+			g.write(l[ind])
+		else:
+			g.write(l[ind])
+	# for field in l:
+	# 	g.write(field)
+	os.remove(avl_file)
+	os.rename('avl_file', 'runs/b737.avl')
+	g.close()
+	f.close()
 
 def save_txt():
 	avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
@@ -221,14 +263,14 @@ coordinates_button.place(x=720,y=200)
 
 scale = Entry(root, width=5)
 scale.place(x=565,y=330)
-scale_button = Button(root, text="Scale", command=scale,highlightbackground="#708090")
+scale_button = Button(root, text="Scale", command=change_scale,highlightbackground="#708090")
 scale_button.pack()
 scale_button.place(x=560,y=300)
 
-translate = Entry(root, width=5)
-translate.pack()
-translate.place(x=645,y=330)
-translate_button = Button(root, text="Translate", command=translate,highlightbackground="#708090")
+translate_But = Entry(root, width=5)
+translate_But.pack()
+translate_But.place(x=645,y=330)
+translate_button = Button(root, text="Translate", command=change_translate,highlightbackground="#708090")
 translate_button.pack()
 translate_button.place(x=630,y=300)
 
