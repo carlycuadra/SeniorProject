@@ -32,69 +32,31 @@ OPTIONS = [
 ]
 print(avl.Point)
 
-# def SelSurf():
-# 	a=[]
-# 	for line in fileinput.FileInput(avl_file,inplace=1):
-# 		if 'SURFACE' in line:
-# 			line = line.next()
-# 			a.append(line)
-# 			print(line)
-# 		else:
-# 			print (line)
 
 def open_txt():
 	avl_file = filedialog.askopenfilename(initialdir="C:/gui/", title="Open Text File", filetypes=(("AVL Files", "*.avl"), ))
-	name = avl_file
-	# name = name.replace("C:/gui/", "")
-	# name = name.replace(".avl", "")
-	a=[]
-	print("opened: "+avl_file)
-	with open(avl_file) as f:
-		for line in f:
-			n=next(f)
-			if 'SURFACE' in line:
+	f = open(avl_file, 'r')
 
-				# for i in range(2):
-					if n != "\n":
-						a.append(n.rstrip('\n'))
-						filtered = [x for x in a if x.strip()]
-					if n == "\n":
-						for i in range(2):
-							surf=next(f)
-							a.append(surf.rstrip('\n'))
-							filtered = [x for x in a if x.strip()]
-	print(filtered)
+	a=[]
+	l=f.readlines()
+
+	for ind in range(len(l)):
+		if 'SURFACE' in l[ind]:
+			print(l[ind+1])
+			a.append(l[ind+1].rstrip('\n'))
+			filtered = [x for x in a if x.strip()]
+	print(a)
 		
 	variable = StringVar(root)
 	variable.set("Select Surface") 
 	w = OptionMenu(root, variable, *filtered)
 	w.configure(background="#708090")
-	w.place(x=560,y=150)	
-	# avl_file = open(avl_file, 'r')
-	# content = avl_file.read()
-	# for line in content:
-    #         for part in line.split():
-    #          if "#Xref" in part:
-    #             print (part+" and "+part+1)
-	#tkMessageBox.showinfo("Message", content)   
-	# avl_file.close()
+	w.place(x=560,y=150)
+	change_scale(variable.get())
 
 	root.title('{name}')
 
-# def get_Surface():
-# 	avl_file = avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
 
-# 	a=[]
-# 	with open(avl_file) as f:
-# 		for line in f:
-# 			if 'SURFACE' in line:
-# 				for i in range(2):
-# 						scale=next(f)
-# 						a.append(scale.rstrip('\n'))
-# 						filtered = [x for x in a if x.strip()]
-			
-
-#GUI to change X coordinate of an AVL file
 def change_X():
 	avl_file = avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
 	x = x_coord.get()
@@ -136,28 +98,22 @@ def change_Z():
 def change_scale():
 
 	avl_file = filedialog.askopenfilename(initialdir="C:/gui/", title="Open Text File", filetypes=(("AVL Files", "*.avl"), ))
-	# name = avl_file
 
 	new_scale=scale.get()
 	print("opened: "+avl_file)
 	f = open(avl_file, 'r')
 	g = open('avl_file', 'w')
 	l=f.readlines()
-	# f.close()
-	
 
-	# with fdopen(fh,'w') as new_file:
-	# for line in fileinput.FileInput(avl_file,inplace=1):
 	for ind in range(len(l)):
 		if 'SCALE' in l[ind]:
 			print(l[ind+1])
-			l[ind+1]=new_scale
+			l[ind+1]=new_scale+'\n'
 			
 			g.write(l[ind])
 		else:
 			g.write(l[ind])
-	# for field in l:
-	# 	g.write(field)
+
 	os.remove(avl_file)
 	os.rename('avl_file', 'runs/b737.avl')
 	g.close()
@@ -179,7 +135,7 @@ def change_translate():
 	for ind in range(len(l)):
 		if 'TRANSLATE' in l[ind]:
 			print(trans)
-			l[ind+1]=trans
+			l[ind+1]=trans+'\n'
 			print(l[ind+1])
 			g.write(l[ind])
 		else:
