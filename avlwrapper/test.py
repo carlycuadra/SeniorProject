@@ -23,11 +23,7 @@ x = Tkinter.Label(root, text=" Update existing AVL files to alter the geometry o
 w.pack()
 x.pack()
 root.configure(bg='#708090')
-canvas = Canvas(root, width = 300, height = 300)      
-canvas.place(x=30,y=100)     
-img = ImageTk.PhotoImage(file="airplane.png")      
-canvas.create_image(0,0, anchor=NW, image=img)
-canvas.configure(bg="#708090")
+
 
 
 def open_txt():
@@ -49,9 +45,31 @@ def open_txt():
 	w = OptionMenu(root, variable, *filtered)
 	w.configure(background="#708090")
 	w.place(x=560,y=150)
-	print(variable.get())
+	# print(variable.get())
+	avl_file = open(avl_file, 'r')
+	content = avl_file.read()
+	
 
-	root.title('{name}')
+	my_frame = Frame(root,width=40,height=15)
+	my_frame.place(x=20,y=165)
+	# my_frame.pack(pady=10)
+
+	# Create scrollbar
+	text_scroll = Scrollbar(my_frame)
+	text_scroll.pack(side=RIGHT, fill=Y)
+
+
+
+	my_text = Text(my_frame, width=40, height=15, font=("Helvetica", 16), yscrollcommand=text_scroll.set, undo=True)
+	my_text.insert(END, content)
+	my_text.place(x=20,y=250)
+	
+	my_text.pack()
+
+	# Configure our scrollbar
+	text_scroll.config(command=my_text.yview)
+	avl_file.close()
+	root.title('AVL Editor')
 
 
 def change_X():
@@ -123,11 +141,7 @@ def change_translate():
 	f = open(avl_file, 'r')
 	g = open('avl_file', 'w')
 	l=f.readlines()
-	# f.close()
-	
 
-	# with fdopen(fh,'w') as new_file:
-	# for line in fileinput.FileInput(avl_file,inplace=1):
 	for ind in range(len(l)):
 		if 'TRANSLATE' in l[ind]:
 			print(trans)
@@ -136,8 +150,7 @@ def change_translate():
 			g.write(l[ind])
 		else:
 			g.write(l[ind])
-	# for field in l:
-	# 	g.write(field)
+
 	os.remove(avl_file)
 	os.rename('avl_file', avl_file)
 	g.close()
@@ -160,37 +173,9 @@ def loadImg():
 	p.stdin.write('OPER' + os.linesep)
 	p.stdin.write('G' + os.linesep)
 
-def select():
-
-
-	selected = my_text.selection_get()
-
-	my_label.config(text=selected)
-
-
-
-# my_frame = Frame(root)
-# my_frame.pack(pady=10)
-
-# Create scrollbar
-# text_scroll = Scrollbar(my_frame)
-# text_scroll.pack(side=RIGHT, fill=Y)
-
-
-
-# my_text = Text(my_frame, width=15, height=15, font=("Helvetica", 16), yscrollcommand=text_scroll.set, undo=True)
-# my_text.place(x=50,y=250)
-# my_text.pack()
-
-# Configure our scrollbar
-# text_scroll.config(command=my_text.yview)
-
-
 open_button = Button(root, text="Select AVL File", command=open_txt,highlightbackground="#708090")
 open_button.pack()
 open_button.place(x=575,y=100)
-
-# default value
 
 
 x_coord = Entry(root, width=5)
@@ -216,6 +201,9 @@ coordinates_button = Button(root, text="Change Z coordinate", command=change_Z,h
 coordinates_button.pack()
 coordinates_button.place(x=720,y=200)
 
+preview = Tkinter.Label(root, text=" Select an AVL file to see a preview of the content ",font = "Helvetica 13 italic",bg="#708090")
+preview.place(x=20,y=130)
+
 u = Tkinter.Label(root, text=" Separate each value with a space (Eg: 1.0 1.0 1.0) ",font = "Helvetica 13 italic",bg="#708090")
 u.place(x=485,y=280)
 scale = Entry(root, width=5)
@@ -231,15 +219,9 @@ translate_button = Button(root, text="Translate", command=change_translate,highl
 translate_button.pack()
 translate_button.place(x=630,y=300)
 
-img_but = Button(root, text="load geometry", command=loadImg,highlightbackground="#708090")
+img_but = Button(root, text="Load geometry", command=loadImg,highlightbackground="#708090")
 img_but.pack()
 img_but.place(x=575,y=400)
-# select_button = Button(root, text="Select Text", command=select)
-# select_button.pack(pady=10)
-
-
-# my_label = Label(root, text="")
-# my_label.pack()
 
 
 root.mainloop()
