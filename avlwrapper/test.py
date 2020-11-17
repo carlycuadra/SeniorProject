@@ -11,6 +11,7 @@ from PIL import ImageTk,Image
 import ttk
 import tkMessageBox
 import os
+from subprocess import Popen, PIPE
 
 
 root = Tkinter.Tk()
@@ -18,28 +19,24 @@ root.title('AVL Test')
 root.iconbitmap('airplane.ico')
 root.geometry("900x500")
 w = Tkinter.Label(root, text=" AVL Editor",compound = Tkinter.CENTER,font = "Helvetica 50 bold italic",bg="#708090")
+x = Tkinter.Label(root, text=" Update existing AVL files to alter the geometry of an aircraft ",compound = Tkinter.CENTER,font = "Helvetica 20 italic",bg="#708090")
 w.pack()
+x.pack()
 root.configure(bg='#708090')
 canvas = Canvas(root, width = 300, height = 300)      
 canvas.place(x=30,y=100)     
 img = ImageTk.PhotoImage(file="airplane.png")      
 canvas.create_image(0,0, anchor=NW, image=img)
 canvas.configure(bg="#708090")
-OPTIONS = [
-"Jan",
-"Feb",
-"Mar"
-]
-print(avl.Point)
 
 
 def open_txt():
 	avl_file = filedialog.askopenfilename(initialdir="C:/gui/", title="Open Text File", filetypes=(("AVL Files", "*.avl"), ))
 	f = open(avl_file, 'r')
-
+	path=os.path.abspath(avl_file)
+	print("path is ",path)
 	a=[]
 	l=f.readlines()
-
 	for ind in range(len(l)):
 		if 'SURFACE' in l[ind]:
 			print(l[ind+1])
@@ -52,7 +49,7 @@ def open_txt():
 	w = OptionMenu(root, variable, *filtered)
 	w.configure(background="#708090")
 	w.place(x=560,y=150)
-	change_scale(variable.get())
+	print(variable.get())
 
 	root.title('{name}')
 
@@ -151,7 +148,39 @@ def save_txt():
 	avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
 	avl_file = open(avl_file, 'w')
 	avl_file.write(my_text.get(1.0, END))
-	
+
+def run(*popenargs, **kwargs):
+    input = kwargs.pop("input", None)
+    check = kwargs.pop("handle", False)
+
+    if input is not None:
+        if 'stdin' in kwargs:
+            raise ValueError('stdin and input arguments may not both be used.')
+        kwargs['stdin'] = subprocess.PIPE
+
+    process = subprocess.Popen(*popenargs, **kwargs)
+    try:
+        stdout, stderr = process.communicate(input)
+    except:
+        process.kill()
+        process.wait()
+        raise
+    retcode = process.poll()
+    if check and retcode:
+        raise subprocess.CalledProcessError(
+            retcode, process.args, output=stdout, stderr=stderr)
+    return retcode, stdout, stderr
+
+def loadImg():
+	avl_file = filedialog.askopenfilename(initialdir="C:/gui/", title="Open Text File", filetypes=(("AVL Files", "*.avl"), ))
+	path=os.path.abspath(avl_file)
+	pwd = os.getcwd()
+	avl335 = pwd + "/avl3.35"
+
+	p=subprocess.Popen(avl335, shell=True, stdin=subprocess.PIPE)
+	p.stdin.write("LOAD "+path+os.linesep)
+	p.stdin.write('OPER' + os.linesep)
+	p.stdin.write('G' + os.linesep)
 
 def select():
 
@@ -160,9 +189,7 @@ def select():
 
 	my_label.config(text=selected)
 
-pwd = os.getcwd()
-avl335 = pwd + "/avl3.35"
-subprocess.Popen([avl335])
+
 
 # my_frame = Frame(root)
 # my_frame.pack(pady=10)
@@ -188,12 +215,6 @@ open_button.place(x=575,y=100)
 # default value
 
 
-
-
-save_button = Button(root, text="Save AVL File", command=save_txt,highlightbackground="#708090")
-save_button.pack()
-save_button.place(x=575,y=400)
-
 x_coord = Entry(root, width=5)
 x_coord.place(x=450,y=230)
 
@@ -217,6 +238,8 @@ coordinates_button = Button(root, text="Change Z coordinate", command=change_Z,h
 coordinates_button.pack()
 coordinates_button.place(x=720,y=200)
 
+u = Tkinter.Label(root, text=" Separate each value with a space (Eg: 1.0 1.0 1.0) ",font = "Helvetica 13 italic",bg="#708090")
+u.place(x=485,y=280)
 scale = Entry(root, width=5)
 scale.place(x=565,y=330)
 scale_button = Button(root, text="Scale", command=change_scale,highlightbackground="#708090")
@@ -230,7 +253,9 @@ translate_button = Button(root, text="Translate", command=change_translate,highl
 translate_button.pack()
 translate_button.place(x=630,y=300)
 
-
+img_but = Button(root, text="load geometry", command=loadImg,highlightbackground="#708090")
+img_but.pack()
+img_but.place(x=575,y=400)
 # select_button = Button(root, text="Select Text", command=select)
 # select_button.pack(pady=10)
 
