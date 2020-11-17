@@ -67,7 +67,6 @@ def change_X():
 			else:
 				print (line)
 				
-	
 def change_Y():
 	avl_file = avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
 	y = y_coord.get()
@@ -112,7 +111,7 @@ def change_scale():
 			g.write(l[ind])
 
 	os.remove(avl_file)
-	os.rename('avl_file', 'runs/b737.avl')
+	os.rename('avl_file', avl_file)
 	g.close()
 	f.close()
   
@@ -140,7 +139,7 @@ def change_translate():
 	# for field in l:
 	# 	g.write(field)
 	os.remove(avl_file)
-	os.rename('avl_file', 'runs/b737.avl')
+	os.rename('avl_file', avl_file)
 	g.close()
 	f.close()
 
@@ -149,27 +148,6 @@ def save_txt():
 	avl_file = open(avl_file, 'w')
 	avl_file.write(my_text.get(1.0, END))
 
-def run(*popenargs, **kwargs):
-    input = kwargs.pop("input", None)
-    check = kwargs.pop("handle", False)
-
-    if input is not None:
-        if 'stdin' in kwargs:
-            raise ValueError('stdin and input arguments may not both be used.')
-        kwargs['stdin'] = subprocess.PIPE
-
-    process = subprocess.Popen(*popenargs, **kwargs)
-    try:
-        stdout, stderr = process.communicate(input)
-    except:
-        process.kill()
-        process.wait()
-        raise
-    retcode = process.poll()
-    if check and retcode:
-        raise subprocess.CalledProcessError(
-            retcode, process.args, output=stdout, stderr=stderr)
-    return retcode, stdout, stderr
 
 def loadImg():
 	avl_file = filedialog.askopenfilename(initialdir="C:/gui/", title="Open Text File", filetypes=(("AVL Files", "*.avl"), ))
