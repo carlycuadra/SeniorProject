@@ -75,31 +75,43 @@ def open_txt():
 def change_X():
 	avl_file = avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
 	x = x_coord.get()
+	b = "test"
 	for line in fileinput.FileInput(avl_file,inplace=1):
-		if 'Xref' in line:
+		line=line.rstrip()
+		if 'Xref' in b:
 			temp = line.split()
-			rep = temp[0]
-			line = line.replace(rep, x)
+			rep = " " + temp[0] + " "
+			new_x = " " + x + " "
+			line = line.replace(rep, new_x, 1)
+		b = line
 		print(line)
 				
 def change_Y():
 	avl_file = avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
 	y = y_coord.get()
+	b = "test"
 	for line in fileinput.FileInput(avl_file,inplace=1):
-		if 'Yref' in line:
+		line=line.rstrip()
+		if 'Yref' in b:
 			temp = line.split()
-			rep = temp[1]
-			line = line.replace(rep, y)
+			rep = " " + temp[1] + " "
+			new_y = " " + y + " "
+			line = line.replace(rep, new_y, 1)
+		b = line
 		print (line)
 
 def change_Z():
 	avl_file = avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
 	z = z_coord.get()
+	b = "test"
 	for line in fileinput.FileInput(avl_file,inplace=1):
-		if 'Zref' in line:
+		line=line.rstrip()
+		if 'Zref' in b:
 			temp = line.split()
-			rep = temp[2]
-			line = line.replace(rep, z)
+			rep = " " + temp[2] + " "
+			new_z = " " + z + " "
+			line = line.replace(rep, new_z, 1)
+		b = line
 		print (line)
 
 def change_scale():
