@@ -47,10 +47,13 @@ def open_txt():
 	w.configure(background="#303030")
 	w.place(x=560,y=150)
 	# print(variable.get())
+	avl_path=avl_file
+	print(avl_path)
 	avl_file = open(avl_file, 'r')
 	content = avl_file.read()
-	
-
+	myPath=os.path.basename(avl_path)
+	title = Tkinter.Label(root, text=myPath.title(),font = "Helvetica 23 bold italic",bg="#303030",fg="#FFFFFF")
+	title.place(x=120,y=105)
 	my_frame = Frame(root,width=40,height=15)
 	my_frame.place(x=20,y=165)
 	# my_frame.pack(pady=10)
@@ -64,7 +67,6 @@ def open_txt():
 	my_text = Text(my_frame, width=40, height=15, font=("Helvetica", 16), yscrollcommand=text_scroll.set, undo=True)
 	my_text.insert(END, content)
 	my_text.place(x=20,y=250)
-	
 	my_text.pack()
 
 	# Configure our scrollbar
