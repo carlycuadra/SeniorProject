@@ -98,7 +98,7 @@ def change_Z():
 	for line in fileinput.FileInput(avl_file,inplace=1):
 		if 'Zref' in line:
 			temp = line.split()
-			rep = line[2]
+			rep = temp[2]
 			line = line.replace(rep, z)
 		print (line)
 
