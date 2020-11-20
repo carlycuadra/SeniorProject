@@ -9,7 +9,6 @@ from math import radians, sqrt, tan
 import subprocess
 from PIL import ImageTk,Image  
 import ttk
-import tkMessageBox
 import os
 from subprocess import Popen, PIPE
 
@@ -24,6 +23,7 @@ w.pack()
 x.pack()
 root.configure(bg='#708090')
 
+pwd = os.getcwd()
 
 
 def open_txt():
@@ -75,39 +75,32 @@ def open_txt():
 def change_X():
 	avl_file = avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
 	x = x_coord.get()
-	with open(avl_file) as f:
-		for line in fileinput.FileInput(avl_file,inplace=1):
-			if 'Xref' in line:
-				line = line.split()
-				line[0] = x
-				new_string = ' '.join(line)
-				print(new_string)
-			else:
-				print (line)
+	for line in fileinput.FileInput(avl_file,inplace=1):
+		if 'Xref' in line:
+			temp = line.split()
+			rep = temp[0]
+			line = line.replace(rep, x)
+		print(line)
 				
 def change_Y():
 	avl_file = avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
 	y = y_coord.get()
 	for line in fileinput.FileInput(avl_file,inplace=1):
-		if 'Xref' in line:
-			line = line.split()
-			line[1] = y
-			new_string = ' '.join(line)
-			print(new_string)
-		else:
-			print (line)
+		if 'Yref' in line:
+			temp = line.split()
+			rep = temp[1]
+			line = line.replace(rep, y)
+		print (line)
 
 def change_Z():
 	avl_file = avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
 	z = z_coord.get()
 	for line in fileinput.FileInput(avl_file,inplace=1):
-		if 'Xref' in line:
-			line = line.split()
-			line[2] = z
-			new_string = ' '.join(line)
-			print(new_string)
-		else:
-			print (line)
+		if 'Zref' in line:
+			temp = line.split()
+			rep = line[2]
+			line = line.replace(rep, z)
+		print (line)
 
 def change_scale():
 
@@ -165,7 +158,6 @@ def save_txt():
 def loadImg():
 	avl_file = filedialog.askopenfilename(initialdir="C:/gui/", title="Open Text File", filetypes=(("AVL Files", "*.avl"), ))
 	path=os.path.abspath(avl_file)
-	pwd = os.getcwd()
 	avl335 = pwd + "/avl3.35"
 
 	p=subprocess.Popen(avl335, shell=True, stdin=subprocess.PIPE)
