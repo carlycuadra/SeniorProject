@@ -18,11 +18,12 @@ root = Tkinter.Tk()
 root.title('AVL Test')
 root.iconbitmap('airplane.ico')
 root.geometry("900x500")
-w = Tkinter.Label(root, text=" AVL Editor",compound = Tkinter.CENTER,font = "Helvetica 50 bold italic",bg="#708090")
-x = Tkinter.Label(root, text=" Update existing AVL files to alter the geometry of an aircraft ",compound = Tkinter.CENTER,font = "Helvetica 20 italic",bg="#708090")
+w = Tkinter.Label(root, text=" AVL Editor",compound = Tkinter.CENTER,font = "Helvetica 50 bold italic",bg="#303030",fg="#FFFFFF")
+x = Tkinter.Label(root, text=" Update existing AVL files to alter the geometry of an aircraft ",compound = Tkinter.CENTER,font = "Helvetica 20 italic",bg="#303030",fg="#FFFFFF")
 w.pack()
 x.pack()
-root.configure(bg='#708090')
+ 
+root.configure(bg='#303030')
 
 
 
@@ -43,7 +44,7 @@ def open_txt():
 	variable = StringVar(root)
 	variable.set("Select Surface") 
 	w = OptionMenu(root, variable, *filtered)
-	w.configure(background="#708090")
+	w.configure(background="#303030")
 	w.place(x=560,y=150)
 	# print(variable.get())
 	avl_file = open(avl_file, 'r')
@@ -70,7 +71,6 @@ def open_txt():
 	text_scroll.config(command=my_text.yview)
 	avl_file.close()
 	root.title('AVL Editor')
-
 
 def change_X():
 	avl_file = avl_file = filedialog.askopenfilename(initialdir="/Users/carlycuadra/Documents/SeniorProject/Avl/runs/avl_file", title="Open AVL File", filetypes=(("AVL Files", "*.avl"), ))
@@ -173,55 +173,54 @@ def loadImg():
 	p.stdin.write('OPER' + os.linesep)
 	p.stdin.write('G' + os.linesep)
 
-open_button = Button(root, text="Select AVL File", command=open_txt,highlightbackground="#708090")
+open_button = Button(root, text="Select AVL File", command=open_txt,highlightbackground="#303030")
 open_button.pack()
-open_button.place(x=575,y=100)
+open_button.place(x=575,y=180)
 
 
 x_coord = Entry(root, width=5)
-x_coord.place(x=450,y=230)
+x_coord.place(x=450,y=280)
 
-coordinates_button = Button(root, text="Change X coordinate", command=change_X,highlightbackground="#708090")
+coordinates_button = Button(root, text="Change X coordinate", command=change_X,highlightbackground="#303030")
 coordinates_button.pack()
-coordinates_button.place(x=400,y=200)
+coordinates_button.place(x=400,y=250)
 
 
 y_coord = Entry(root, width=5)
 y_coord.pack()
-y_coord.place(x=600,y=230)
-coordinates_button = Button(root, text="Change Y coordinate", command=change_Y,highlightbackground="#708090")
+y_coord.place(x=600,y=280)
+coordinates_button = Button(root, text="Change Y coordinate", command=change_Y,highlightbackground="#303030")
 coordinates_button.pack()
-coordinates_button.place(x=560,y=200)
-
+coordinates_button.place(x=560,y=250)
 
 z_coord=Entry(root,width=5)
-z_coord.place(x=760,y=230)
+z_coord.place(x=760,y=280)
 
-coordinates_button = Button(root, text="Change Z coordinate", command=change_Z,highlightbackground="#708090")
+coordinates_button = Button(root, text="Change Z coordinate", command=change_Z,highlightbackground="#303030")
 coordinates_button.pack()
-coordinates_button.place(x=720,y=200)
+coordinates_button.place(x=720,y=250)
 
-preview = Tkinter.Label(root, text=" Select an AVL file to see a preview of the content ",font = "Helvetica 13 italic",bg="#708090")
-preview.place(x=20,y=130)
+preview = Tkinter.Label(root, text=" Select an AVL file to see a preview of the content ",font = "Helvetica 13 italic",bg="#303030",fg="#FFFFFF")
+preview.place(x=20,y=140)
 
-u = Tkinter.Label(root, text=" Separate each value with a space (Eg: 1.0 1.0 1.0) ",font = "Helvetica 13 italic",bg="#708090")
-u.place(x=485,y=280)
+u = Tkinter.Label(root, text=" Separate each value with a space (Eg: 1.0 1.0 1.0) ",font = "Helvetica 13 italic",bg="#303030",fg="#FFFFFF")
+u.place(x=485,y=330)
 scale = Entry(root, width=5)
-scale.place(x=565,y=330)
-scale_button = Button(root, text="Scale", command=change_scale,highlightbackground="#708090")
+scale.place(x=565,y=380)
+scale_button = Button(root, text="Scale", command=change_scale,highlightbackground="#303030")
 scale_button.pack()
-scale_button.place(x=560,y=300)
+scale_button.place(x=560,y=350)
 
 translate_But = Entry(root, width=5)
 translate_But.pack()
-translate_But.place(x=645,y=330)
-translate_button = Button(root, text="Translate", command=change_translate,highlightbackground="#708090")
+translate_But.place(x=645,y=380)
+translate_button = Button(root, text="Translate", command=change_translate,highlightbackground="#303030")
 translate_button.pack()
-translate_button.place(x=630,y=300)
+translate_button.place(x=630,y=350)
 
-img_but = Button(root, text="Load geometry", command=loadImg,highlightbackground="#708090")
+img_but = Button(root, text="Load geometry", command=loadImg,highlightbackground="#303030")
 img_but.pack()
-img_but.place(x=575,y=400)
+img_but.place(x=575,y=450)
 
 
 root.mainloop()
