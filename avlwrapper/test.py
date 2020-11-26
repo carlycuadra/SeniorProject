@@ -82,8 +82,8 @@ def change_X():
 		line=line.rstrip()
 		if 'Xref' in b:
 			temp = line.split()
-			rep = " " + temp[0] + " "
-			new_x = " " + x + " "
+			rep = temp[0] + " "
+			new_x = x + " "
 			line = line.replace(rep, new_x, 1)
 		b = line
 		print(line)
@@ -110,9 +110,16 @@ def change_Z():
 		line=line.rstrip()
 		if 'Zref' in b:
 			temp = line.split()
-			rep = " " + temp[2] + " "
-			new_z = " " + z + " "
-			line = line.replace(rep, new_z, 1)
+			y_val = temp[1]
+			z_val = temp[2]
+			y_string = " " + temp[1] + " "
+			rep = " " + temp[2]
+			new_z = " " + z
+			if y_val == z_val:
+				line = line.replace(rep, new_z, 2)
+				line = line.replace(new_z, y_string, 1)
+			else:
+				line = line.replace(rep, new_z, 1)
 		b = line
 		print (line)
 
@@ -200,8 +207,8 @@ coordinates_button.pack()
 coordinates_button.place(x=560,y=250)
 
 z_coord=Entry(root,width=5)
+z_coord.pack()
 z_coord.place(x=760,y=280)
-
 coordinates_button = Button(root, text="Change Z coordinate", command=change_Z,highlightbackground="#303030")
 coordinates_button.pack()
 coordinates_button.place(x=720,y=250)
