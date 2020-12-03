@@ -4,7 +4,7 @@ import json
 from Tkinter import *
 import tkFileDialog as filedialog
 import fileinput
-import avlwrapper as avl
+# import avlwrapper as avl
 from math import radians, sqrt, tan
 import subprocess
 from PIL import ImageTk,Image  
