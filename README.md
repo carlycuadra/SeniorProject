@@ -1,5 +1,9 @@
-# SeniorProject
-use the design software called "AVL" which is a free software.  Your
-utility will need to be able to read/edit/write into the text file that
-is then read by AVL. 
-2 parts:  front end and the utility that can read/write into text file
+# SeniorProject - GUI to alter and plot AVL files
+
+To run the program, run     python test.py    in the avlwrapper directory.
+
+### Dependencies
+The user must install tkinter, pillow, and Python to run this program. If the user is running this program on MacOS, XQuartz must also be installed to be able to run AVL.
+
+### AVL file format
+The file format must be similar to that of b737.avl, where the coordinate values are on the line beneath their respective labels. 
